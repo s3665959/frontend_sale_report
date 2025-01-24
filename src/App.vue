@@ -41,17 +41,19 @@
               </li>
             </template>
 
-            <!-- Non-Admin Links -->
-            <template v-else>
+            <!-- General Links -->
+            <template v-else-if="isLoggedIn">
               <li class="nav-item">
                 <router-link to="/submit-sale" class="nav-link">Submit Sale</router-link>
               </li>
-              <li class="nav-item">
-                <router-link to="/login" class="nav-link">Login</router-link>
-              </li>
             </template>
 
-            <!-- Logout Button -->
+            <!-- Login Link (Visible Only When Logged Out) -->
+            <li class="nav-item" v-if="!isLoggedIn">
+              <router-link to="/login" class="nav-link">Login</router-link>
+            </li>
+
+            <!-- Logout Button (Visible Only When Logged In) -->
             <li class="nav-item" v-if="isLoggedIn">
               <button class="btn btn-danger nav-link" @click="handleLogout">Logout</button>
             </li>
@@ -84,17 +86,17 @@ export default {
       return store.user;
     },
     isLoggedIn() {
-      return !!this.user;
+      return !!this.user; // User is logged in if store.user exists
     },
     isAdmin() {
-      return this.user?.branch === 'admin';
+      return this.user?.branch === 'admin'; // User is an admin if branch is 'admin'
     },
   },
   methods: {
     handleLogout() {
-      store.setUser(null);
+      store.setUser(null); // Clear user state in the store
       alert('You have been logged out.');
-      this.$router.push('/login');
+      this.$router.push('/login'); // Redirect to the login page
     },
   },
 };

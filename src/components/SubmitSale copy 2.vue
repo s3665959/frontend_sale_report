@@ -187,8 +187,8 @@
         </div>
       </form>
 
-      <!-- Confirmation Modal -->
-      <div
+       <!-- Confirmation Modal -->
+       <div
         class="modal fade"
         id="confirmationModal"
         tabindex="-1"
@@ -199,9 +199,8 @@
           <div class="modal-content" id="modalContent">
             <div class="modal-header">
               <h5 class="modal-title centered-title" id="confirmationModalLabel">
-  ส่งเงินสำหรับ วันที่ {{ formatDate(form.sale_date) }}</h5>
-
-
+                ส่งเงินสำหรับ วันที่ {{ formatDate(form.sale_date) }}
+              </h5>
               <button
                 type="button"
                 class="btn-close"
@@ -210,60 +209,72 @@
               ></button>
             </div>
             <div class="modal-body">
-              <p class="current_date"><strong>วันที่:</strong> {{ currentDate }}</p>      
+             
+              <p class="current_date"><strong>วันที่:</strong> {{ currentDateTime }}</p>
               <h4 class="centered-title"><strong>สาขา:</strong> {{ form.branch }}</h4>
-   <br>
+<br>
+              <p class="actual_sales text-end"><strong>ยอดขายรวม:</strong> {{ formatNumber(form.actual_sales) }}</p>
+             
+              <p v-if="salesMatchStatus === 'matched'" class="text-success text-end">
+                ยอดตรง Matched!
+              </p>
+              <p v-else-if="salesMatchStatus" class="text-danger text-end">
+                ยอดไม่ตรง ต่างกันที่: {{ formatNumber(salesDifference) }}
+              </p>
 
-   
-   <table class="table table-bordered table-hover">
-  <thead>
-    <tr>
-      <th class="bg-lightblue">รายได้</th>
-      <th class="bg-lightblue text-end amount-column">จำนวนเงิน</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <td>เงินสด</td>
-      <td class="text-end amount-column">{{ formatNumber(form.cash) }}</td>
-    </tr>
-    <tr>
-      <td>เงินโอน</td>
-      <td class="text-end amount-column">{{ formatNumber(form.transfer) }}</td>
-    </tr>
-    <tr>
-      <td>บัตรเครดิต</td>
-      <td class="text-end amount-column">{{ formatNumber(form.credit_card) }}</td>
-    </tr>
-    <tr>
-      <td>บัตรกำนัล</td>
-      <td class="text-end amount-column">{{ formatNumber(form.voucher) }}</td>
-    </tr>
-    <tr>
-      <td>รายได้อื่นๆ</td>
-      <td class="text-end amount-column">{{ formatNumber(form.other_income) }}</td>
-    </tr>
-    <tr>
-      <th class="bg-lightred">รายจ่าย</th>
-      <th class="bg-lightred text-end amount-column">จำนวนเงิน</th>
-    </tr>
-    <tr>
-      <td>ค่าใช้จ่าย</td>
-      <td class="text-end amount-column">{{ formatNumber(form.expense) }}</td>
-    </tr>
-    <tr>
-      <td>ค่าโอน</td>
-      <td class="text-end amount-column">{{ formatNumber(form.other_expense) }}</td>
-    </tr>
-  </tbody>
-</table>
+              <!-- Table of Sales Details -->
+              <table class="table table-bordered table-hover">
+                <thead>
+                  <tr>
+                    <th class="bg-lightblue">รายได้</th>
+                    <th class="bg-lightblue text-end">จำนวนเงิน</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td>เงินสด</td>
+                    <td class="text-end">{{ formatNumber(form.cash) }}</td>
+                  </tr>
+                  <tr>
+                    <td>เงินโอน</td>
+                    <td class="text-end">{{ formatNumber(form.transfer) }}</td>
+                  </tr>
+                  <tr>
+                    <td>บัตรเครดิต</td>
+                    <td class="text-end">{{ formatNumber(form.credit_card) }}</td>
+                  </tr>
+                  <tr>
+                    <td>บัตรกำนัล</td>
+                    <td class="text-end">{{ formatNumber(form.voucher) }}</td>
+                  </tr>
+                  <tr>
+                    <td>รายได้อื่นๆ</td>
+                    <td class="text-end">{{ formatNumber(form.other_income) }}</td>
+                  </tr>
+                  <tr>
+                    <th class="bg-lightred">รายจ่าย</th>
+                    <th class="bg-lightred text-end">จำนวนเงิน</th>
+                  </tr>
+                  <tr>
+                    <td>ค่าใช้จ่าย</td>
+                    <td class="text-end">{{ formatNumber(form.expense) }}</td>
+                  </tr>
+                  <tr>
+                    <td>ค่าโอน</td>
+                    <td class="text-end">{{ formatNumber(form.other_expense) }}</td>
+                  </tr>
+                </tbody>
+              </table>
 
-
-  <h5 class="cash-text"><strong>ส่งเงินสด:</strong> {{ formatNumber(form.cash_in_drawer) }}</h5>
-  <h5 class="total-text"><strong>รายได้สุทธิ:</strong> {{ formatNumber(total) }}</h5>
-</div>
+              <h5 class="cash-text">
+                <strong>ส่งเงินสด:</strong> {{ formatNumber(form.cash_in_drawer) }}
+              </h5>
+              <h5 class="total-text">
+                <strong>รายได้สุทธิ:</strong> {{ formatNumber(total) }}
+              </h5>
+            </div>
             <div class="modal-footer">
-              <button 
+              <button
                 type="button"
                 class="btn btn-secondary"
                 data-bs-dismiss="modal"
@@ -278,7 +289,6 @@
               >
                 Confirm and Submit
               </button>
-              <!-- Share and Save Buttons -->
               <button
                 v-if="showShareButtons"
                 class="btn btn-primary me-2"
@@ -344,13 +354,16 @@ export default {
       return this.form.actual_sales === this.total ? "matched" : "not_matched";
     },
 
-    currentDate() {
-      const today = new Date();
-      const day = String(today.getDate()).padStart(2, "0");
-      const month = String(today.getMonth() + 1).padStart(2, "0");
-      const year = today.getFullYear();
-      return `${day}-${month}-${year}`; // Format as DD-MM-YYYY
-    },
+    currentDateTime() {
+    const now = new Date();
+    const day = String(now.getDate()).padStart(2, "0");
+    const month = String(now.getMonth() + 1).padStart(2, "0");
+    const year = now.getFullYear();
+    const hours = String(now.getHours()).padStart(2, "0");
+    const minutes = String(now.getMinutes()).padStart(2, "0");
+    return `${day}-${month}-${year} ${hours}:${minutes}`; // Format as DD-MM-YYYY HH:mm
+  },
+
   },
   watch: {
     // Watch cash, expense, and other_expense to recalculate cash_in_drawer
@@ -470,10 +483,14 @@ font-weight: 600;
   padding: 30px 0;
 }
 .current_date{
-
+  font-size: medium;
   text-align: end;
 }
-
+.actual_sales{
+  font-size: larger;
+  color: rgb(0, 131, 41);
+  font-weight: 600;
+}
 
 .modal-body{
   font-size: larger;

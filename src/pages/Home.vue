@@ -3,12 +3,12 @@
       <div class="container">
         <div class="row align-items-center text-center">
           <div class="col-md-12">
-            <h1 class="display-4 my-4">Welcome to Sales Report</h1>
+            <h1 class="display-4 my-4">Nira Sales Report</h1>
             <p class="lead">
-              Manage your daily sales efficiently with our simple and mobile-friendly platform.
+              Manage daily sales efficiently develop by APGEN
             </p>
             <router-link to="/submit-sale" class="btn btn-primary btn-lg mt-3">
-              Submit Today's Sale
+              เริ่มใช้งาน
             </router-link>
           </div>
         </div>

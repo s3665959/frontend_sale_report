@@ -54,7 +54,8 @@
 
                <!-- Earnings Section -->
                <div class="mt-4">
-          <h5>Earnings</h5>
+          <h5 class ="earning centered-title">รายได้</h5>
+          <br>
           <div class="row g-3">
             <div class="col-md-6 d-flex align-items-center">
               <label for="cash" class="form-label me-2 flex-label">เงินสด:</label>
@@ -111,7 +112,9 @@
 
                 <!-- Expense Section -->
                 <div class="mt-4">
-          <h5>Expenses</h5>
+      
+          <h5 class ="expense centered-title">ค่าใช้จ่าย</h5>
+          <br>
           <div class="row g-3">
             <div class="col-md-6 d-flex align-items-center">
               <label for="expense" class="form-label me-2 flex-label">ค่าใช้จ่าย:</label>
@@ -138,7 +141,9 @@
 
               <!-- Remaining Cash -->
               <div class="mt-4">
-          <h5>คงเหลือเงินสด</h5>
+
+          <h5 class ="cash_total centered-title">คงเหลือเงินสด</h5>
+          <br>
           <div class="row g-3">
             <div class="col-md-6 d-flex align-items-center">
               <label for="cashInDrawer" class="form-label me-2 flex-label">ส่งเงินสด:</label>
@@ -148,6 +153,7 @@
                 class="form-control flex-input"
                 v-model.number="form.cash_in_drawer"
                 required
+                readonly
               />
             </div>
           </div>
@@ -155,7 +161,8 @@
 
         <!-- Total Section -->
         <div class="mt-4">
-          <h5>รวมยอดคงเหลือ</h5>
+          <h5 class ="sum_total centered-title">รวมยอดคงเหลือ</h5>
+     <br>
           <div class="row g-3">
             <div class="col-md-6 d-flex align-items-center">
               <label for="total" class="form-label me-2 flex-label">รวมยอด:</label>
@@ -457,74 +464,125 @@ export default {
 
 <style scoped>
 
-.bg-lightblue {
-    background-color: #F0F8FF; /* เปลี่ยนสีตามต้องการ */
-  }
+/* General form container styling */
+.submit-sale {
+  background-color: #f8f9fa;
+  padding: 10px;
+  max-width: fit-content;
+  margin-inline: auto;
 
-.bg-lightred{
-  background-color: #f7ddddd4; 
+border-radius: 30px; /* Adds rounded corners */
 
 }
 
-.total-text {
- text-align: end;
- color: rgb(15, 11, 236);
- font-weight: 600;
+/* Flex container for label and input alignment */
+.d-flex.align-items-center {
+  display: flex;
+  align-items: center;
+  gap: 10px; /* Adds spacing between label and input */
+}
 
+/* Labels with fixed width for alignment */
+.flex-label {
+  min-width: 100px; /* Consistent width for labels */
+  text-align: right; /* Aligns label text to the right */
+  font-weight: 500; /* Slightly bold text for better readability */
+}
+
+/* Inputs that expand dynamically */
+.flex-input {
+  flex: 1; /* Allows inputs to fill the remaining space */
+  max-width: 200px; /* Limits the width of inputs */
+}
+
+/* Styling for the entire form */
+form {
+  max-width: 600px; /* Limits the form width for better readability */
+  margin: auto; /* Centers the form on the page */
+}
+
+/* Table styling for modal */
+.table {
+  font-size: 1rem;
+}
+
+.bg-lightblue {
+  background-color: #f0f8ff;
+}
+
+.bg-lightred {
+  background-color: #f7ddddd4;
+}
+
+.earning{
+  background-color: #cff3d1;
+}
+
+.expense{
+
+  background-color: #f7ddddd4;
+}
+.sum_total{
+
+  background-color: #c9edf5e1;
+
+}
+.cash_total{
+
+  background-color: #f5ddc1e1;
+}
+
+/* Text styling for total and cash */
+.total-text {
+  text-align: end;
+  color: rgb(15, 11, 236);
+  font-weight: 600;
 }
 
 .cash-text {
- text-align: end;
-color: red;
-font-weight: 600;
+  text-align: end;
+  color: red;
+  font-weight: 600;
 }
-.submit-sale {
-  background-color: #f8f9fa;
-  padding: 30px 0;
-}
-.current_date{
+
+/* Current date styling */
+.current_date {
   font-size: medium;
   text-align: end;
 }
-.actual_sales{
+
+/* Actual sales styling */
+.actual_sales {
   font-size: larger;
   color: rgb(0, 131, 41);
   font-weight: 600;
 }
 
-.modal-body{
+/* Modal body styling */
+.modal-body {
   font-size: larger;
 }
+
+/* Centered modal title */
 .centered-title {
   text-align: center;
-  width: 100%; /* Ensures full-width alignment */
-  margin: 0 auto; /* Centers the text horizontally */
+  width: 100%;
+  margin: 0 auto;
 }
 
+/* Amount column styling */
 .amount-column {
-    width: 150px; /* Set a fixed width for the amount column */
-    text-align: right; /* Align text to the right for decimal alignment */
-    padding-right: 20px; /* Add padding to center the numbers visually */
-    margin: 0 auto; /* Center the entire column in the table */
-  }
-
-  .table th.amount-column {
-    text-align: center; /* Center header text */
-  }
-
-  .submit-sale {
-  background-color: #f8f9fa;
-  padding: 30px 0;
+  width: 150px;
+  text-align: right;
+  padding-right: 20px;
+  margin: 0 auto;
 }
 
-.flex-label {
-  min-width: 100px; /* Minimum space for labels */
-  text-align: right; /* Align label text to the right */
+/* Header text alignment for amount column */
+.table th.amount-column {
+  text-align: center;
 }
 
-.flex-input {
-  flex: 1; /* Let inputs fill the remaining space */
-}
 
 
 </style>

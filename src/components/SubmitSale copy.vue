@@ -17,8 +17,8 @@
           </div>
         </div>
 
-        <!-- Sale Date Section -->
-        <div class="row g-3 mt-4">
+   <!-- Sale Date Section -->
+   <div class="row g-3 mt-4">
           <div class="col-md-6">
             <label for="saleDate" class="form-label">Sale Date</label>
             <input
@@ -29,16 +29,156 @@
               required
             />
           </div>
-          <div class="col-md-6">
-            <label for="actualSales" class="form-label">Actual Sales</label>
-            <input
+        </div>
+        <br>
+
+         <!-- actual Sales -->
+             <div class="mt-4">
+          <h5>ยอดขายรวม</h5>
+          <div class="row g-3">
+            <div class="col-md-6 d-flex align-items-center">
+              <label for="actualSales" class="form-label me-2 flex-label">รายได้สุทธิ:</label>
+              <input
               type="number"
               id="actualSales"
               class="form-control"
               v-model.number="form.actual_sales"
               required
             />
+            </div>
+
+
+
           </div>
+        </div>
+
+               <!-- Earnings Section -->
+               <div class="mt-4">
+          <h5>Earnings</h5>
+          <div class="row g-3">
+            <div class="col-md-6 d-flex align-items-center">
+              <label for="cash" class="form-label me-2 flex-label">เงินสด:</label>
+              <input
+                type="number"
+                id="cash"
+                class="form-control flex-input"
+                v-model.number="form.cash"
+                required
+              />
+            </div>
+            <div class="col-md-6 d-flex align-items-center">
+              <label for="transfer" class="form-label me-2 flex-label">โอนเข้าบัญชี:</label>
+              <input
+                type="number"
+                id="transfer"
+                class="form-control flex-input"
+                v-model.number="form.transfer"
+                required
+              />
+            </div>
+            <div class="col-md-6 d-flex align-items-center">
+              <label for="creditCard" class="form-label me-2 flex-label">บัตรเครดิต:</label>
+              <input
+                type="number"
+                id="creditCard"
+                class="form-control flex-input"
+                v-model.number="form.credit_card"
+                required
+              />
+            </div>
+            <div class="col-md-6 d-flex align-items-center">
+              <label for="voucher" class="form-label me-2 flex-label">บัตรกำนัล:</label>
+              <input
+                type="number"
+                id="voucher"
+                class="form-control flex-input"
+                v-model.number="form.voucher"
+                required
+              />
+            </div>
+            <div class="col-md-6 d-flex align-items-center">
+              <label for="otherIncome" class="form-label me-2 flex-label">รายได้อื่นๆ:</label>
+              <input
+                type="number"
+                id="otherIncome"
+                class="form-control flex-input"
+                v-model.number="form.other_income"
+                required
+              />
+            </div>
+          </div>
+        </div>
+
+                <!-- Expense Section -->
+                <div class="mt-4">
+          <h5>Expenses</h5>
+          <div class="row g-3">
+            <div class="col-md-6 d-flex align-items-center">
+              <label for="expense" class="form-label me-2 flex-label">ค่าใช้จ่าย:</label>
+              <input
+                type="number"
+                id="expense"
+                class="form-control flex-input"
+                v-model.number="form.expense"
+                required
+              />
+            </div>
+            <div class="col-md-6 d-flex align-items-center">
+              <label for="otherExpense" class="form-label me-2 flex-label">ค่าโอน:</label>
+              <input
+                type="number"
+                id="otherExpense"
+                class="form-control flex-input"
+                v-model.number="form.other_expense"
+                required
+              />
+            </div>
+          </div>
+        </div>
+
+              <!-- Remaining Cash -->
+              <div class="mt-4">
+          <h5>คงเหลือเงินสด</h5>
+          <div class="row g-3">
+            <div class="col-md-6 d-flex align-items-center">
+              <label for="cashInDrawer" class="form-label me-2 flex-label">ส่งเงินสด:</label>
+              <input
+                type="number"
+                id="cashInDrawer"
+                class="form-control flex-input"
+                v-model.number="form.cash_in_drawer"
+                required
+              />
+            </div>
+          </div>
+        </div>
+
+        <!-- Total Section -->
+        <div class="mt-4">
+          <h5>รวมยอดคงเหลือ</h5>
+          <div class="row g-3">
+            <div class="col-md-6 d-flex align-items-center">
+              <label for="total" class="form-label me-2 flex-label">รวมยอด:</label>
+              <input
+                type="number"
+                id="total"
+                class="form-control flex-input"
+                :value="total"
+                readonly
+              />
+            </div>
+          </div>
+        </div>
+
+          <!-- Check Matching -->
+          <div class="mt-4">
+          <h5>Sales Check</h5>
+          <p v-if="salesMatchStatus === 'matched'" class="text-success">
+            Matched!
+          </p>
+          <p v-else-if="salesMatchStatus" class="text-danger">
+            Not match by {{ formatNumber(salesDifference) }}
+          </p>
         </div>
 
         <!-- Submit Button -->
@@ -47,8 +187,8 @@
         </div>
       </form>
 
-      <!-- Confirmation Modal -->
-      <div
+       <!-- Confirmation Modal -->
+       <div
         class="modal fade"
         id="confirmationModal"
         tabindex="-1"
@@ -69,14 +209,17 @@
               ></button>
             </div>
             <div class="modal-body">
-              <p><strong>สาขา:</strong> {{ form.branch }}</p>
-              <p><strong>Actual Sales:</strong> {{ formatNumber(form.actual_sales) }}</p>
-              <p><strong>Total:</strong> {{ formatNumber(total) }}</p>
-              <p v-if="salesMatchStatus === 'matched'" class="text-success">
-                Sales Check: Matched!
+             
+              <p class="current_date"><strong>วันที่:</strong> {{ currentDateTime }}</p>
+              <h4 class="centered-title"><strong>สาขา:</strong> {{ form.branch }}</h4>
+<br>
+              <p class="actual_sales text-end"><strong>ยอดขายรวม:</strong> {{ formatNumber(form.actual_sales) }}</p>
+             
+              <p v-if="salesMatchStatus === 'matched'" class="text-success text-end">
+                ยอดตรง Matched!
               </p>
-              <p v-else-if="salesMatchStatus" class="text-danger">
-                Sales Check: Not matched by {{ formatNumber(salesDifference) }}
+              <p v-else-if="salesMatchStatus" class="text-danger text-end">
+                ยอดไม่ตรง ต่างกันที่: {{ formatNumber(salesDifference) }}
               </p>
 
               <!-- Table of Sales Details -->
@@ -184,7 +327,7 @@ export default {
         other_income: 0,
         expense: 0,
         other_expense: 0,
-        cash_in_drawer: 0, // Will be computed dynamically
+        cash_in_drawer: 0, // Computed dynamically
         sale_date: new Date().toISOString().slice(0, 10), // Default to today
         actual_sales: 0,
       },
@@ -200,7 +343,7 @@ export default {
         this.form.voucher +
         this.form.other_income -
         this.form.expense -
-        this.form.other_expense
+        this.form.other_expense 
       );
     },
     salesDifference() {
@@ -210,18 +353,50 @@ export default {
       if (this.form.actual_sales === 0) return null; // No input yet
       return this.form.actual_sales === this.total ? "matched" : "not_matched";
     },
+
+    currentDateTime() {
+    const now = new Date();
+    const day = String(now.getDate()).padStart(2, "0");
+    const month = String(now.getMonth() + 1).padStart(2, "0");
+    const year = now.getFullYear();
+    const hours = String(now.getHours()).padStart(2, "0");
+    const minutes = String(now.getMinutes()).padStart(2, "0");
+    return `${day}-${month}-${year} ${hours}:${minutes}`; // Format as DD-MM-YYYY HH:mm
+  },
+
+  },
+  watch: {
+    // Watch cash, expense, and other_expense to recalculate cash_in_drawer
+    form: {
+      handler() {
+        this.form.cash_in_drawer =
+          this.form.cash - this.form.expense - this.form.other_expense;
+      },
+      deep: true,
+    },
+  },
+  mounted() {
+    const modalElement = document.getElementById("confirmationModal");
+    modalElement.addEventListener("hidden.bs.modal", this.resetForm); // Reset form on modal close
+  },
+  created() {
+    const user = JSON.parse(localStorage.getItem("user"));
+    if (user && user.branch) {
+      this.form.branch = user.branch;
+    } else {
+      alert("You must log in first.");
+      this.$router.push("/");
+    }
   },
   methods: {
-    formatNumber(value) {
-      return value.toLocaleString("en-US", {
-        minimumFractionDigits: 2,
-        maximumFractionDigits: 2,
-      });
-    },
     formatDate(date) {
-      if (!date) return ""; // Handle empty or undefined date
-      const [year, month, day] = date.split("-");
-      return `${day}-${month}-${year}`;
+    if (!date) return ""; // Handle empty or undefined date
+    const [year, month, day] = date.split("-");
+    return `${day}-${month}-${year}`;
+  },
+    formatNumber(value) {
+      if (typeof value !== "number") return value; // Return the value if it's not a number
+      return value.toLocaleString("en-US", { minimumFractionDigits: 2, maximumFractionDigits: 2 });
     },
     showConfirmationModal() {
       const modalElement = document.getElementById("confirmationModal");
@@ -245,34 +420,139 @@ export default {
         console.error("Error submitting sale:", error);
       }
     },
+    resetForm() {
+      this.form = {
+        branch: this.form.branch, // Preserve branch
+        cash: 0,
+        transfer: 0,
+        credit_card: 0,
+        voucher: 0,
+        other_income: 0,
+        expense: 0,
+        other_expense: 0,
+        cash_in_drawer: 0,
+      };
+      this.showShareButtons = false;
+    },
+    shareModalToLine() {
+      html2canvas(document.getElementById("modalContent")).then((canvas) => {
+        const lineUrl = `https://line.me/R/share?text=${encodeURIComponent(
+          canvas.toDataURL()
+        )}`;
+        window.open(lineUrl, "_blank");
+      });
+    },
+    saveModalAsImage() {
+      html2canvas(document.getElementById("modalContent")).then((canvas) => {
+        const link = document.createElement("a");
+        link.href = canvas.toDataURL("image/png");
+        link.download = "sale_summary.png";
+        link.click();
+      });
+    },
   },
+
 };
 </script>
 
 <style scoped>
+
+/* General form container styling */
+.submit-sale {
+  background-color: #f8f9fa;
+  padding: 30px 0;
+}
+
+/* Flex container for label and input alignment */
+.d-flex.align-items-center {
+  display: flex;
+  align-items: center;
+  gap: 10px; /* Adds spacing between label and input */
+}
+
+/* Labels with fixed width for alignment */
+.flex-label {
+  min-width: 100px; /* Consistent width for labels */
+  text-align: right; /* Aligns label text to the right */
+  font-weight: 500; /* Slightly bold text for better readability */
+}
+
+/* Inputs that expand dynamically */
+.flex-input {
+  flex: 1; /* Allows inputs to fill the remaining space */
+  max-width: 200px; /* Limits the width of inputs */
+}
+
+/* Styling for the entire form */
+form {
+  max-width: 600px; /* Limits the form width for better readability */
+  margin: auto; /* Centers the form on the page */
+}
+
+/* Table styling for modal */
+.table {
+  font-size: 1rem;
+}
+
 .bg-lightblue {
   background-color: #f0f8ff;
 }
+
 .bg-lightred {
   background-color: #f7ddddd4;
 }
-.text-success {
-  font-weight: bold;
-}
-.text-danger {
-  font-weight: bold;
-}
-.cash-text {
-  text-align: end;
-  color: red;
-  font-weight: bold;
-}
+
+/* Text styling for total and cash */
 .total-text {
   text-align: end;
   color: rgb(15, 11, 236);
-  font-weight: bold;
+  font-weight: 600;
 }
+
+.cash-text {
+  text-align: end;
+  color: red;
+  font-weight: 600;
+}
+
+/* Current date styling */
+.current_date {
+  font-size: medium;
+  text-align: end;
+}
+
+/* Actual sales styling */
+.actual_sales {
+  font-size: larger;
+  color: rgb(0, 131, 41);
+  font-weight: 600;
+}
+
+/* Modal body styling */
+.modal-body {
+  font-size: larger;
+}
+
+/* Centered modal title */
+.centered-title {
+  text-align: center;
+  width: 100%;
+  margin: 0 auto;
+}
+
+/* Amount column styling */
 .amount-column {
+  width: 150px;
   text-align: right;
+  padding-right: 20px;
+  margin: 0 auto;
 }
+
+/* Header text alignment for amount column */
+.table th.amount-column {
+  text-align: center;
+}
+
+
+
 </style>
