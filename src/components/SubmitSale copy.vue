@@ -17,128 +17,33 @@
           </div>
         </div>
 
-        <!-- Earnings Section -->
-        <div class="mt-4">
-          <h5>Earnings</h5>
-          <div class="row g-3">
-            <div class="col-md-6">
-              <label for="cash" class="form-label">เงินสด</label>
-              <input
-                type="number"
-                id="cash"
-                class="form-control"
-                v-model.number="form.cash"
-                required
-              />
-            </div>
-            <div class="col-md-6">
-              <label for="transfer" class="form-label">โอนเข้าบัญชี</label>
-              <input
-                type="number"
-                id="transfer"
-                class="form-control"
-                v-model.number="form.transfer"
-                required
-              />
-            </div>
-            <div class="col-md-6">
-              <label for="creditCard" class="form-label">บัตรเครดิต</label>
-              <input
-                type="number"
-                id="creditCard"
-                class="form-control"
-                v-model.number="form.credit_card"
-                required
-              />
-            </div>
-            <div class="col-md-6">
-              <label for="voucher" class="form-label">บัตรกำนัล</label>
-              <input
-                type="number"
-                id="voucher"
-                class="form-control"
-                v-model.number="form.voucher"
-                required
-              />
-            </div>
-            <div class="col-md-6">
-              <label for="otherIncome" class="form-label">รายได้อื่นๆ</label>
-              <input
-                type="number"
-                id="otherIncome"
-                class="form-control"
-                v-model.number="form.other_income"
-                required
-              />
-            </div>
+        <!-- Sale Date Section -->
+        <div class="row g-3 mt-4">
+          <div class="col-md-6">
+            <label for="saleDate" class="form-label">Sale Date</label>
+            <input
+              type="date"
+              id="saleDate"
+              class="form-control"
+              v-model="form.sale_date"
+              required
+            />
           </div>
-        </div>
-
-        <!-- Expense Section -->
-        <div class="mt-4">
-          <h5>Expenses</h5>
-          <div class="row g-3">
-            <div class="col-md-6">
-              <label for="expense" class="form-label">ค่าใช้จ่าย</label>
-              <input
-                type="number"
-                id="expense"
-                class="form-control"
-                v-model.number="form.expense"
-                required
-              />
-            </div>
-            <div class="col-md-6">
-              <label for="otherExpense" class="form-label">ค่าโอน</label>
-              <input
-                type="number"
-                id="otherExpense"
-                class="form-control"
-                v-model.number="form.other_expense"
-                required
-              />
-            </div>
-        
-          </div>
-        </div>
-
-            <div class="mt-4">
-          <h5>คงเหลือเงินสด</h5>
-          <div class="row g-3">
-            <div class="col-md-6">
-              <input
-                type="number"
-                id="cashInDrawer"
-                class="form-control"
-                v-model.number="form.cash_in_drawer"
-                required
-              />
-            </div>
-          </div>
-        </div>
-
-        <!-- Total Section -->
-        <div class="mt-4">
-          <h5>รวมยอดคงเหลือ</h5>
-          <div class="row g-3">
-            <div class="col-md-6">
-  
-              <input
-                type="number"
-                id="total"
-                class="form-control"
-                :value="total"
-                readonly
-              />
-            </div>
+          <div class="col-md-6">
+            <label for="actualSales" class="form-label">Actual Sales</label>
+            <input
+              type="number"
+              id="actualSales"
+              class="form-control"
+              v-model.number="form.actual_sales"
+              required
+            />
           </div>
         </div>
 
         <!-- Submit Button -->
         <div class="text-center mt-4">
-          <button type="submit" class="btn btn-success btn-lg">
-            Submit
-          </button>
+          <button type="submit" class="btn btn-success btn-lg">Submit</button>
         </div>
       </form>
 
@@ -153,7 +58,9 @@
         <div class="modal-dialog">
           <div class="modal-content" id="modalContent">
             <div class="modal-header">
-              <h5 class="modal-title" id="confirmationModalLabel">Confirm Sale Details</h5>
+              <h5 class="modal-title centered-title" id="confirmationModalLabel">
+                ส่งเงินสำหรับ วันที่ {{ formatDate(form.sale_date) }}
+              </h5>
               <button
                 type="button"
                 class="btn-close"
@@ -162,19 +69,69 @@
               ></button>
             </div>
             <div class="modal-body">
-  <p><strong>สาขา:</strong> {{ form.branch }}</p>
-  <p><strong>เงินสด:</strong> {{ formatNumber(form.cash) }}</p>
-  <p><strong>เงินโอน:</strong> {{ formatNumber(form.transfer) }}</p>
-  <p><strong>บัตรเครดิต:</strong> {{ formatNumber(form.credit_card) }}</p>
-  <p><strong>บัตรกำนัล:</strong> {{ formatNumber(form.voucher) }}</p>
-  <p><strong>รายได้อื่นๆ:</strong> {{ formatNumber(form.other_income) }}</p>
-  <p><strong>ค่าใช้จ่าย:</strong> {{ formatNumber(form.expense) }}</p>
-  <p><strong>ค่าโอน:</strong> {{ formatNumber(form.other_expense) }}</p>
-  <h5 class="total-text"><strong>คงเหลือเงินสด:</strong> {{ formatNumber(form.cash_in_drawer) }}</h5>
-  <h5 class="total-text"><strong>รวมยอดคงเหลือ:</strong> {{ formatNumber(total) }}</h5>
-</div>
+              <p><strong>สาขา:</strong> {{ form.branch }}</p>
+              <p><strong>Actual Sales:</strong> {{ formatNumber(form.actual_sales) }}</p>
+              <p><strong>Total:</strong> {{ formatNumber(total) }}</p>
+              <p v-if="salesMatchStatus === 'matched'" class="text-success">
+                Sales Check: Matched!
+              </p>
+              <p v-else-if="salesMatchStatus" class="text-danger">
+                Sales Check: Not matched by {{ formatNumber(salesDifference) }}
+              </p>
+
+              <!-- Table of Sales Details -->
+              <table class="table table-bordered table-hover">
+                <thead>
+                  <tr>
+                    <th class="bg-lightblue">รายได้</th>
+                    <th class="bg-lightblue text-end">จำนวนเงิน</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td>เงินสด</td>
+                    <td class="text-end">{{ formatNumber(form.cash) }}</td>
+                  </tr>
+                  <tr>
+                    <td>เงินโอน</td>
+                    <td class="text-end">{{ formatNumber(form.transfer) }}</td>
+                  </tr>
+                  <tr>
+                    <td>บัตรเครดิต</td>
+                    <td class="text-end">{{ formatNumber(form.credit_card) }}</td>
+                  </tr>
+                  <tr>
+                    <td>บัตรกำนัล</td>
+                    <td class="text-end">{{ formatNumber(form.voucher) }}</td>
+                  </tr>
+                  <tr>
+                    <td>รายได้อื่นๆ</td>
+                    <td class="text-end">{{ formatNumber(form.other_income) }}</td>
+                  </tr>
+                  <tr>
+                    <th class="bg-lightred">รายจ่าย</th>
+                    <th class="bg-lightred text-end">จำนวนเงิน</th>
+                  </tr>
+                  <tr>
+                    <td>ค่าใช้จ่าย</td>
+                    <td class="text-end">{{ formatNumber(form.expense) }}</td>
+                  </tr>
+                  <tr>
+                    <td>ค่าโอน</td>
+                    <td class="text-end">{{ formatNumber(form.other_expense) }}</td>
+                  </tr>
+                </tbody>
+              </table>
+
+              <h5 class="cash-text">
+                <strong>ส่งเงินสด:</strong> {{ formatNumber(form.cash_in_drawer) }}
+              </h5>
+              <h5 class="total-text">
+                <strong>รายได้สุทธิ:</strong> {{ formatNumber(total) }}
+              </h5>
+            </div>
             <div class="modal-footer">
-              <button 
+              <button
                 type="button"
                 class="btn btn-secondary"
                 data-bs-dismiss="modal"
@@ -189,7 +146,6 @@
               >
                 Confirm and Submit
               </button>
-              <!-- Share and Save Buttons -->
               <button
                 v-if="showShareButtons"
                 class="btn btn-primary me-2"
@@ -229,6 +185,8 @@ export default {
         expense: 0,
         other_expense: 0,
         cash_in_drawer: 0, // Will be computed dynamically
+        sale_date: new Date().toISOString().slice(0, 10), // Default to today
+        actual_sales: 0,
       },
       showShareButtons: false,
     };
@@ -242,37 +200,28 @@ export default {
         this.form.voucher +
         this.form.other_income -
         this.form.expense -
-        this.form.other_expense 
+        this.form.other_expense
       );
     },
-  },
-  watch: {
-    // Watch cash, expense, and other_expense to recalculate cash_in_drawer
-    form: {
-      handler() {
-        this.form.cash_in_drawer =
-          this.form.cash - this.form.expense - this.form.other_expense;
-      },
-      deep: true,
+    salesDifference() {
+      return Math.abs(this.form.actual_sales - this.total);
     },
-  },
-  mounted() {
-    const modalElement = document.getElementById("confirmationModal");
-    modalElement.addEventListener("hidden.bs.modal", this.resetForm); // Reset form on modal close
-  },
-  created() {
-    const user = JSON.parse(localStorage.getItem("user"));
-    if (user && user.branch) {
-      this.form.branch = user.branch;
-    } else {
-      alert("You must log in first.");
-      this.$router.push("/");
-    }
+    salesMatchStatus() {
+      if (this.form.actual_sales === 0) return null; // No input yet
+      return this.form.actual_sales === this.total ? "matched" : "not_matched";
+    },
   },
   methods: {
     formatNumber(value) {
-      if (typeof value !== "number") return value; // Return the value if it's not a number
-      return value.toLocaleString("en-US", { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+      return value.toLocaleString("en-US", {
+        minimumFractionDigits: 2,
+        maximumFractionDigits: 2,
+      });
+    },
+    formatDate(date) {
+      if (!date) return ""; // Handle empty or undefined date
+      const [year, month, day] = date.split("-");
+      return `${day}-${month}-${year}`;
     },
     showConfirmationModal() {
       const modalElement = document.getElementById("confirmationModal");
@@ -288,7 +237,7 @@ export default {
         });
         if (response.ok) {
           alert("Daily sale submitted successfully!");
-          this.showShareButtons = true; // Show Share and Save buttons
+          this.showShareButtons = true;
         } else {
           alert("Submission failed!");
         }
@@ -296,49 +245,34 @@ export default {
         console.error("Error submitting sale:", error);
       }
     },
-    resetForm() {
-      this.form = {
-        branch: this.form.branch, // Preserve branch
-        cash: 0,
-        transfer: 0,
-        credit_card: 0,
-        voucher: 0,
-        other_income: 0,
-        expense: 0,
-        other_expense: 0,
-        cash_in_drawer: 0,
-      };
-      this.showShareButtons = false;
-    },
-    shareModalToLine() {
-      html2canvas(document.getElementById("modalContent")).then((canvas) => {
-        const lineUrl = `https://line.me/R/share?text=${encodeURIComponent(
-          canvas.toDataURL()
-        )}`;
-        window.open(lineUrl, "_blank");
-      });
-    },
-    saveModalAsImage() {
-      html2canvas(document.getElementById("modalContent")).then((canvas) => {
-        const link = document.createElement("a");
-        link.href = canvas.toDataURL("image/png");
-        link.download = "sale_summary.png";
-        link.click();
-      });
-    },
   },
-
 };
 </script>
 
 <style scoped>
+.bg-lightblue {
+  background-color: #f0f8ff;
+}
+.bg-lightred {
+  background-color: #f7ddddd4;
+}
+.text-success {
+  font-weight: bold;
+}
+.text-danger {
+  font-weight: bold;
+}
+.cash-text {
+  text-align: end;
+  color: red;
+  font-weight: bold;
+}
 .total-text {
- text-align: end;
- text-decoration: underline;
+  text-align: end;
+  color: rgb(15, 11, 236);
+  font-weight: bold;
 }
-.submit-sale {
-  background-color: #f8f9fa;
-  padding: 30px 0;
+.amount-column {
+  text-align: right;
 }
-
 </style>

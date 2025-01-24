@@ -17,8 +17,8 @@
           </div>
         </div>
 
-           <!-- Sale Date Section -->
-        <div class="row g-3 mt-4">
+   <!-- Sale Date Section -->
+   <div class="row g-3 mt-4">
           <div class="col-md-6">
             <label for="saleDate" class="form-label">Sale Date</label>
             <input
@@ -30,57 +30,78 @@
             />
           </div>
         </div>
+        <br>
 
-        <!-- Earnings Section -->
-        <div class="mt-4">
+         <!-- actual Sales -->
+             <div class="mt-4">
+          <h5>ยอดขายรวม</h5>
+          <div class="row g-3">
+            <div class="col-md-6 d-flex align-items-center">
+              <label for="actualSales" class="form-label me-2 flex-label">รายได้สุทธิ:</label>
+              <input
+              type="number"
+              id="actualSales"
+              class="form-control"
+              v-model.number="form.actual_sales"
+              required
+            />
+            </div>
+
+
+
+          </div>
+        </div>
+
+               <!-- Earnings Section -->
+               <div class="mt-4">
           <h5>Earnings</h5>
           <div class="row g-3">
-            <div class="col-md-6">
-              <label for="cash" class="form-label">เงินสด</label>
+            <div class="col-md-6 d-flex align-items-center">
+              <label for="cash" class="form-label me-2 flex-label">เงินสด:</label>
               <input
                 type="number"
                 id="cash"
-                class="form-control"
+                class="form-control flex-input"
                 v-model.number="form.cash"
                 required
               />
             </div>
-            <div class="col-md-6">
-              <label for="transfer" class="form-label">โอนเข้าบัญชี</label>
+            <div class="col-md-6 d-flex align-items-center">
+              <label for="transfer" class="form-label me-2 flex-label">โอนเข้าบัญชี:</label>
               <input
                 type="number"
                 id="transfer"
-                class="form-control"
+                class="form-control flex-input"
                 v-model.number="form.transfer"
                 required
               />
             </div>
-            <div class="col-md-6">
-              <label for="creditCard" class="form-label">บัตรเครดิต</label>
+            <div class="col-md-6 d-flex align-items-center">
+              <label for="creditCard" class="form-label me-2 flex-label">บัตรเครดิต:</label>
               <input
                 type="number"
                 id="creditCard"
-                class="form-control"
+                class="form-control flex-input"
                 v-model.number="form.credit_card"
                 required
               />
             </div>
-            <div class="col-md-6">
-              <label for="voucher" class="form-label">บัตรกำนัล</label>
+            <div class="col-md-6 d-flex align-items-center">
+              <label for="voucher" class="form-label me-2 flex-label">บัตรกำนัล:</label>
               <input
                 type="number"
                 id="voucher"
-                class="form-control"
+                class="form-control flex-input"
                 v-model.number="form.voucher"
                 required
               />
             </div>
-            <div class="col-md-6">
-              <label for="otherIncome" class="form-label">รายได้อื่นๆ</label>
+            <div class="col-md-6 d-flex align-items-center">
+              <label for="otherIncome" class="form-label me-2 flex-label">รายได้อื่นๆ:</label>
               <input
                 type="number"
                 id="otherIncome"
-                class="form-control"
+                class="form-control flex-input"
                 v-model.number="form.other_income"
                 required
               />
@@ -88,42 +109,43 @@
           </div>
         </div>
 
-        <!-- Expense Section -->
-        <div class="mt-4">
+                <!-- Expense Section -->
+                <div class="mt-4">
           <h5>Expenses</h5>
           <div class="row g-3">
-            <div class="col-md-6">
-              <label for="expense" class="form-label">ค่าใช้จ่าย</label>
+            <div class="col-md-6 d-flex align-items-center">
+              <label for="expense" class="form-label me-2 flex-label">ค่าใช้จ่าย:</label>
               <input
                 type="number"
                 id="expense"
-                class="form-control"
+                class="form-control flex-input"
                 v-model.number="form.expense"
                 required
               />
             </div>
-            <div class="col-md-6">
-              <label for="otherExpense" class="form-label">ค่าโอน</label>
+            <div class="col-md-6 d-flex align-items-center">
+              <label for="otherExpense" class="form-label me-2 flex-label">ค่าโอน:</label>
               <input
                 type="number"
                 id="otherExpense"
-                class="form-control"
+                class="form-control flex-input"
                 v-model.number="form.other_expense"
                 required
               />
             </div>
-        
           </div>
         </div>
 
-            <div class="mt-4">
+              <!-- Remaining Cash -->
+              <div class="mt-4">
           <h5>คงเหลือเงินสด</h5>
           <div class="row g-3">
-            <div class="col-md-6">
+            <div class="col-md-6 d-flex align-items-center">
+              <label for="cashInDrawer" class="form-label me-2 flex-label">ส่งเงินสด:</label>
               <input
                 type="number"
                 id="cashInDrawer"
-                class="form-control"
+                class="form-control flex-input"
                 v-model.number="form.cash_in_drawer"
                 required
               />
@@ -135,12 +157,12 @@
         <div class="mt-4">
           <h5>รวมยอดคงเหลือ</h5>
           <div class="row g-3">
-            <div class="col-md-6">
-  
+            <div class="col-md-6 d-flex align-items-center">
+              <label for="total" class="form-label me-2 flex-label">รวมยอด:</label>
               <input
                 type="number"
                 id="total"
-                class="form-control"
+                class="form-control flex-input"
                 :value="total"
                 readonly
               />
@@ -148,16 +170,25 @@
           </div>
         </div>
 
+          <!-- Check Matching -->
+          <div class="mt-4">
+          <h5>Sales Check</h5>
+          <p v-if="salesMatchStatus === 'matched'" class="text-success">
+            Matched!
+          </p>
+          <p v-else-if="salesMatchStatus" class="text-danger">
+            Not match by {{ formatNumber(salesDifference) }}
+          </p>
+        </div>
+
         <!-- Submit Button -->
         <div class="text-center mt-4">
-          <button type="submit" class="btn btn-success btn-lg">
-            Submit
-          </button>
+          <button type="submit" class="btn btn-success btn-lg">Submit</button>
         </div>
       </form>
 
-      <!-- Confirmation Modal -->
-      <div
+       <!-- Confirmation Modal -->
+       <div
         class="modal fade"
         id="confirmationModal"
         tabindex="-1"
@@ -168,9 +199,8 @@
           <div class="modal-content" id="modalContent">
             <div class="modal-header">
               <h5 class="modal-title centered-title" id="confirmationModalLabel">
-  ส่งเงินสำหรับ วันที่ {{ formatDate(form.sale_date) }}</h5>
-
-
+                ส่งเงินสำหรับ วันที่ {{ formatDate(form.sale_date) }}
+              </h5>
               <button
                 type="button"
                 class="btn-close"
@@ -179,60 +209,72 @@
               ></button>
             </div>
             <div class="modal-body">
-              <p class="current_date"><strong>วันที่:</strong> {{ currentDate }}</p>      
+             
+              <p class="current_date"><strong>วันที่:</strong> {{ currentDateTime }}</p>
               <h4 class="centered-title"><strong>สาขา:</strong> {{ form.branch }}</h4>
-   <br>
+<br>
+              <p class="actual_sales text-end"><strong>ยอดขายรวม:</strong> {{ formatNumber(form.actual_sales) }}</p>
+             
+              <p v-if="salesMatchStatus === 'matched'" class="text-success text-end">
+                ยอดตรง Matched!
+              </p>
+              <p v-else-if="salesMatchStatus" class="text-danger text-end">
+                ยอดไม่ตรง ต่างกันที่: {{ formatNumber(salesDifference) }}
+              </p>
 
-   
-   <table class="table table-bordered table-hover">
-  <thead>
-    <tr>
-      <th class="bg-lightblue">รายได้</th>
-      <th class="bg-lightblue text-end amount-column">จำนวนเงิน</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <td>เงินสด</td>
-      <td class="text-end amount-column">{{ formatNumber(form.cash) }}</td>
-    </tr>
-    <tr>
-      <td>เงินโอน</td>
-      <td class="text-end amount-column">{{ formatNumber(form.transfer) }}</td>
-    </tr>
-    <tr>
-      <td>บัตรเครดิต</td>
-      <td class="text-end amount-column">{{ formatNumber(form.credit_card) }}</td>
-    </tr>
-    <tr>
-      <td>บัตรกำนัล</td>
-      <td class="text-end amount-column">{{ formatNumber(form.voucher) }}</td>
-    </tr>
-    <tr>
-      <td>รายได้อื่นๆ</td>
-      <td class="text-end amount-column">{{ formatNumber(form.other_income) }}</td>
-    </tr>
-    <tr>
-      <th class="bg-lightred">รายจ่าย</th>
-      <th class="bg-lightred text-end amount-column">จำนวนเงิน</th>
-    </tr>
-    <tr>
-      <td>ค่าใช้จ่าย</td>
-      <td class="text-end amount-column">{{ formatNumber(form.expense) }}</td>
-    </tr>
-    <tr>
-      <td>ค่าโอน</td>
-      <td class="text-end amount-column">{{ formatNumber(form.other_expense) }}</td>
-    </tr>
-  </tbody>
-</table>
+              <!-- Table of Sales Details -->
+              <table class="table table-bordered table-hover">
+                <thead>
+                  <tr>
+                    <th class="bg-lightblue">รายได้</th>
+                    <th class="bg-lightblue text-end">จำนวนเงิน</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td>เงินสด</td>
+                    <td class="text-end">{{ formatNumber(form.cash) }}</td>
+                  </tr>
+                  <tr>
+                    <td>เงินโอน</td>
+                    <td class="text-end">{{ formatNumber(form.transfer) }}</td>
+                  </tr>
+                  <tr>
+                    <td>บัตรเครดิต</td>
+                    <td class="text-end">{{ formatNumber(form.credit_card) }}</td>
+                  </tr>
+                  <tr>
+                    <td>บัตรกำนัล</td>
+                    <td class="text-end">{{ formatNumber(form.voucher) }}</td>
+                  </tr>
+                  <tr>
+                    <td>รายได้อื่นๆ</td>
+                    <td class="text-end">{{ formatNumber(form.other_income) }}</td>
+                  </tr>
+                  <tr>
+                    <th class="bg-lightred">รายจ่าย</th>
+                    <th class="bg-lightred text-end">จำนวนเงิน</th>
+                  </tr>
+                  <tr>
+                    <td>ค่าใช้จ่าย</td>
+                    <td class="text-end">{{ formatNumber(form.expense) }}</td>
+                  </tr>
+                  <tr>
+                    <td>ค่าโอน</td>
+                    <td class="text-end">{{ formatNumber(form.other_expense) }}</td>
+                  </tr>
+                </tbody>
+              </table>
 
-
-  <h5 class="cash-text"><strong>ส่งเงินสด:</strong> {{ formatNumber(form.cash_in_drawer) }}</h5>
-  <h5 class="total-text"><strong>รายได้สุทธิ:</strong> {{ formatNumber(total) }}</h5>
-</div>
+              <h5 class="cash-text">
+                <strong>ส่งเงินสด:</strong> {{ formatNumber(form.cash_in_drawer) }}
+              </h5>
+              <h5 class="total-text">
+                <strong>รายได้สุทธิ:</strong> {{ formatNumber(total) }}
+              </h5>
+            </div>
             <div class="modal-footer">
-              <button 
+              <button
                 type="button"
                 class="btn btn-secondary"
                 data-bs-dismiss="modal"
@@ -247,7 +289,6 @@
               >
                 Confirm and Submit
               </button>
-              <!-- Share and Save Buttons -->
               <button
                 v-if="showShareButtons"
                 class="btn btn-primary me-2"
@@ -286,9 +327,9 @@ export default {
         other_income: 0,
         expense: 0,
         other_expense: 0,
-        cash_in_drawer: 0, // Will be computed dynamically
+        cash_in_drawer: 0, // Computed dynamically
         sale_date: new Date().toISOString().slice(0, 10), // Default to today
-
+        actual_sales: 0,
       },
       showShareButtons: false,
     };
@@ -305,13 +346,24 @@ export default {
         this.form.other_expense 
       );
     },
-    currentDate() {
-      const today = new Date();
-      const day = String(today.getDate()).padStart(2, "0");
-      const month = String(today.getMonth() + 1).padStart(2, "0");
-      const year = today.getFullYear();
-      return `${day}-${month}-${year}`; // Format as DD-MM-YYYY
+    salesDifference() {
+      return Math.abs(this.form.actual_sales - this.total);
     },
+    salesMatchStatus() {
+      if (this.form.actual_sales === 0) return null; // No input yet
+      return this.form.actual_sales === this.total ? "matched" : "not_matched";
+    },
+
+    currentDateTime() {
+    const now = new Date();
+    const day = String(now.getDate()).padStart(2, "0");
+    const month = String(now.getMonth() + 1).padStart(2, "0");
+    const year = now.getFullYear();
+    const hours = String(now.getHours()).padStart(2, "0");
+    const minutes = String(now.getMinutes()).padStart(2, "0");
+    return `${day}-${month}-${year} ${hours}:${minutes}`; // Format as DD-MM-YYYY HH:mm
+  },
+
   },
   watch: {
     // Watch cash, expense, and other_expense to recalculate cash_in_drawer
@@ -360,7 +412,7 @@ export default {
         });
         if (response.ok) {
           alert("Daily sale submitted successfully!");
-          this.showShareButtons = true; // Show Share and Save buttons
+          this.showShareButtons = true;
         } else {
           alert("Submission failed!");
         }
@@ -431,10 +483,14 @@ font-weight: 600;
   padding: 30px 0;
 }
 .current_date{
-
+  font-size: medium;
   text-align: end;
 }
-
+.actual_sales{
+  font-size: larger;
+  color: rgb(0, 131, 41);
+  font-weight: 600;
+}
 
 .modal-body{
   font-size: larger;
@@ -455,5 +511,20 @@ font-weight: 600;
   .table th.amount-column {
     text-align: center; /* Center header text */
   }
+
+  .submit-sale {
+  background-color: #f8f9fa;
+  padding: 30px 0;
+}
+
+.flex-label {
+  min-width: 100px; /* Minimum space for labels */
+  text-align: right; /* Align label text to the right */
+}
+
+.flex-input {
+  flex: 1; /* Let inputs fill the remaining space */
+}
+
 
 </style>
