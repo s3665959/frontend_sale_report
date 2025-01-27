@@ -40,10 +40,11 @@
               <label for="actualSales" class="form-label me-2 flex-label">รายได้สุทธิ:</label>
               <input
               type="number"
-              id="actualSales"
-              class="form-control"
-              v-model.number="form.actual_sales"
-              required
+    id="actualSales"
+    class="form-control flex-input"
+    v-model.number="form.actual_sales"
+    step="0.01"
+    required
             />
             </div>
 
@@ -58,43 +59,47 @@
           <br>
           <div class="row g-3">
             <div class="col-md-6 d-flex align-items-center">
-              <label for="cash" class="form-label me-2 flex-label">เงินสด:</label>
-              <input
-                type="number"
-                id="cash"
-                class="form-control flex-input"
-                v-model.number="form.cash"
-                required
-              />
-            </div>
+  <label for="cash" class="form-label me-2 flex-label">เงินสด:</label>
+  <input
+    type="number"
+    id="cash"
+    class="form-control flex-input"
+    v-model.number="form.cash"
+    step="0.01" 
+    required
+  />
+</div>
             <div class="col-md-6 d-flex align-items-center">
               <label for="transfer" class="form-label me-2 flex-label">โอนเข้าบัญชี:</label>
               <input
-                type="number"
-                id="transfer"
-                class="form-control flex-input"
-                v-model.number="form.transfer"
-                required
+              type="number"
+    id="transfer"
+    class="form-control flex-input"
+    v-model.number="form.transfer"
+    step="0.01"
+    required
               />
             </div>
             <div class="col-md-6 d-flex align-items-center">
               <label for="creditCard" class="form-label me-2 flex-label">บัตรเครดิต:</label>
               <input
-                type="number"
-                id="creditCard"
-                class="form-control flex-input"
-                v-model.number="form.credit_card"
-                required
+              type="number"
+    id="creditCard"
+    class="form-control flex-input"
+    v-model.number="form.credit_card"
+    step="0.01"
+    required
               />
             </div>
             <div class="col-md-6 d-flex align-items-center">
               <label for="voucher" class="form-label me-2 flex-label">บัตรกำนัล:</label>
               <input
-                type="number"
-                id="voucher"
-                class="form-control flex-input"
-                v-model.number="form.voucher"
-                required
+              type="number"
+    id="voucher"
+    class="form-control flex-input"
+    v-model.number="form.voucher"
+    step="0.01"
+    required
               />
             </div>
             <div class="col-md-6 d-flex align-items-center">
@@ -123,6 +128,7 @@
                 id="expense"
                 class="form-control flex-input"
                 v-model.number="form.expense"
+                step="0.01"
                 required
               />
             </div>
@@ -133,6 +139,7 @@
                 id="otherExpense"
                 class="form-control flex-input"
                 v-model.number="form.other_expense"
+                step="0.01"
                 required
               />
             </div>
@@ -353,12 +360,25 @@ export default {
         this.form.other_expense 
       );
     },
-    salesDifference() {
-      return Math.abs(this.form.actual_sales - this.total);
+   /** Calculate total earnings (sum of cash, transfer, credit card, and voucher) */
+   totalEarnings() {
+      return (
+        this.form.cash +
+        this.form.transfer +
+        this.form.credit_card +
+        this.form.voucher
+      );
     },
+
+    /** Calculate the difference between actual_sales and totalEarnings */
+    salesDifference() {
+      return Math.abs(this.form.actual_sales - this.totalEarnings);
+    },
+
+    /** Check if actual_sales matches totalEarnings */
     salesMatchStatus() {
       if (this.form.actual_sales === 0) return null; // No input yet
-      return this.form.actual_sales === this.total ? "matched" : "not_matched";
+      return this.form.actual_sales === this.totalEarnings ? "matched" : "not_matched";
     },
 
     currentDateTime() {
